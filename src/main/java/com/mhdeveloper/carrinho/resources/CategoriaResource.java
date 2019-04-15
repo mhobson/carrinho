@@ -27,11 +27,6 @@ public class CategoriaResource {
 	@GetMapping("/buscar/{id}")
 	public ResponseEntity<?> buscar(@PathVariable long id) {
 		Categoria categoria = service.buscar(id);
-		
-		if (!service.existe(id)) {
-			return ResponseEntity.notFound().build();
-		}
-		
 		return ResponseEntity.ok(categoria);
 	}
 }
