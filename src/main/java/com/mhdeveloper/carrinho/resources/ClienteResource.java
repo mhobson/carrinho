@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mhdeveloper.carrinho.domain.Categoria;
-import com.mhdeveloper.carrinho.services.CategoriaService;
+import com.mhdeveloper.carrinho.domain.Cliente;
+import com.mhdeveloper.carrinho.services.ClienteService;
 
 @RestController
-@RequestMapping(value="/categorias")
-public class CategoriaResource {
+@RequestMapping(value="/clientes")
+public class ClienteResource {
 	
 	@Autowired
-	CategoriaService service;
+	ClienteService service;
 	
 	@GetMapping("/listar")
-	public List<Categoria> listar() {
+	public List<Cliente> listar() {
 		return service.listar();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable long id) {
-		Categoria categoria = service.buscar(id);
-		return ResponseEntity.ok(categoria);
+		Cliente cliente = service.buscar(id);
+		return ResponseEntity.ok(cliente);
 	}
 }
