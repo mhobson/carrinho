@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mhdeveloper.carrinho.domain.Cliente;
-import com.mhdeveloper.carrinho.services.ClienteService;
+import com.mhdeveloper.carrinho.domain.Pedido;
+import com.mhdeveloper.carrinho.services.PedidoService;
 
 @RestController
-@RequestMapping(value="/clientes")
-public class ClienteResource {
+@RequestMapping(value="/pedidos")
+public class PedidoResource {
 	
 	@Autowired
-	ClienteService service;
+	PedidoService service;
 	
 	@GetMapping("/listar")
-	public List<Cliente> listar() {
+	public List<Pedido> listar() {
 		return service.listar();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscar(@PathVariable Long id) {
-		Cliente cliente = service.buscar(id);
-		return ResponseEntity.ok(cliente);
+		Pedido pedido = service.buscar(id);
+		return ResponseEntity.ok(pedido);
 	}
 }
