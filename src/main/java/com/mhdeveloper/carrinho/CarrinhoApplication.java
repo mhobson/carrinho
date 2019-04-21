@@ -13,6 +13,7 @@ import com.mhdeveloper.carrinho.domain.Cidade;
 import com.mhdeveloper.carrinho.domain.Cliente;
 import com.mhdeveloper.carrinho.domain.Endereco;
 import com.mhdeveloper.carrinho.domain.Estado;
+import com.mhdeveloper.carrinho.domain.ItemPedido;
 import com.mhdeveloper.carrinho.domain.Pagamento;
 import com.mhdeveloper.carrinho.domain.PagamentoComBoleto;
 import com.mhdeveloper.carrinho.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.mhdeveloper.carrinho.repositories.CidadeRepository;
 import com.mhdeveloper.carrinho.repositories.ClienteRepository;
 import com.mhdeveloper.carrinho.repositories.EnderecoRepository;
 import com.mhdeveloper.carrinho.repositories.EstadoRepository;
+import com.mhdeveloper.carrinho.repositories.ItemPedidoRepository;
 import com.mhdeveloper.carrinho.repositories.PagamentoRepository;
 import com.mhdeveloper.carrinho.repositories.PedidoRepository;
 import com.mhdeveloper.carrinho.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class CarrinhoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CarrinhoApplication.class, args);
@@ -118,5 +123,18 @@ public class CarrinhoApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 200.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
