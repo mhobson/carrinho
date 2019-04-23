@@ -19,7 +19,7 @@ public class ClienteResource {
 	@Autowired
 	ClienteService service;
 	
-	@GetMapping("/listar")
+	@GetMapping
 	public List<Cliente> listar() {
 		return service.listar();
 	}

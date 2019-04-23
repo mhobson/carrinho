@@ -19,7 +19,7 @@ public class PedidoResource {
 	@Autowired
 	PedidoService service;
 	
-	@GetMapping("/listar")
+	@GetMapping
 	public List<Pedido> listar() {
 		return service.listar();
 	}
