@@ -2,6 +2,7 @@ package com.mhdeveloper.carrinho.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mhdeveloper.carrinho.domain.Categoria;
+import com.mhdeveloper.carrinho.dto.CategoriaDTO;
 import com.mhdeveloper.carrinho.services.CategoriaService;
 
 @RestController
@@ -26,8 +28,10 @@ public class CategoriaResource {
 	CategoriaService service;
 	
 	@GetMapping
-	public List<Categoria> listar() {
-		return service.listar();
+	public ResponseEntity<List<CategoriaDTO>> listar() {
+		List<Categoria> lista = service.listar();
+		List<CategoriaDTO> listaDTO = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok(listaDTO);
 	}
 	
 	@GetMapping("/{id}")
