@@ -1,9 +1,13 @@
 package com.mhdeveloper.carrinho.resources.exceptions;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class StandardError {
 	
 	private Integer status;
 	private String msg;
+	
+	@JsonFormat (pattern="dd/MM/yyyy HH:mm")
 	private Long timeStamp;
 	
 	public StandardError(Integer status, String msg, Long timeStamp) {

@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mhdeveloper.carrinho.domain.Categoria;
 import com.mhdeveloper.carrinho.repositories.CategoriaRepository;
+import com.mhdeveloper.carrinho.services.exceptions.DataIntegrityException;
 import com.mhdeveloper.carrinho.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -34,5 +36,15 @@ public class CategoriaService {
 	public Categoria atualizar(Categoria categoria) {
 		buscar(categoria.getId());
 		return repository.save(categoria);
+	}
+
+	public void excluir(Long id) {
+		buscar(id);
+		try {
+			repository.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos associados");
+		}
 	}
 }
