@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mhdeveloper.carrinho.domain.Categoria;
+import com.mhdeveloper.carrinho.dto.CategoriaDTO;
 import com.mhdeveloper.carrinho.repositories.CategoriaRepository;
 import com.mhdeveloper.carrinho.services.exceptions.DataIntegrityException;
 import com.mhdeveloper.carrinho.services.exceptions.ObjectNotFoundException;
@@ -46,5 +47,9 @@ public class CategoriaService {
 		catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos associados");
 		}
+	}
+	
+	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
 	}
 }
