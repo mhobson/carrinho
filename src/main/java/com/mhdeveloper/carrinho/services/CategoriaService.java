@@ -23,23 +23,23 @@ public class CategoriaService {
 		return repository.findAll();
 	}
 	
-	public Categoria buscar(Long id) {
+	public Categoria buscar(Integer id) {
 		Optional<Categoria> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado. Id: " + id + ". Tipo: " + Categoria.class.getSimpleName()));
 	}
 
-	public Categoria inserir(Categoria categoria) {
-		categoria.setId(null);
-		return repository.save(categoria);
+	public Categoria inserir(Categoria obj) {
+		obj.setId(null);
+		return repository.save(obj);
 	}
 
-	public Categoria atualizar(Categoria categoria) {
-		buscar(categoria.getId());
-		return repository.save(categoria);
+	public Categoria atualizar(Categoria obj) {
+		buscar(obj.getId());
+		return repository.save(obj);
 	}
 
-	public void excluir(Long id) {
+	public void excluir(Integer id) {
 		buscar(id);
 		try {
 			repository.deleteById(id);
@@ -49,7 +49,7 @@ public class CategoriaService {
 		}
 	}
 	
-	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
-		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
+	public Categoria fromDTO(CategoriaDTO objDTO) {
+		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
 }

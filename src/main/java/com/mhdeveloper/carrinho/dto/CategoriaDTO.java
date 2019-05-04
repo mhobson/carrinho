@@ -11,7 +11,7 @@ import com.mhdeveloper.carrinho.domain.Categoria;
 public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private Integer id;
 	
 	@NotEmpty(message="É obrigatório o preenchimento do nome")
 	@Length(min=5, max=80, message="O nome deve possuir entre 5 e 80 caracteres")
@@ -20,16 +20,16 @@ public class CategoriaDTO implements Serializable {
 	public CategoriaDTO() {
 	}
 	
-	public CategoriaDTO(Categoria categoria) {
-		this.id = categoria.getId();
-		this.nome = categoria.getNome(); 
+	public CategoriaDTO(Categoria obj) {
+		this.id = obj.getId();
+		this.nome = obj.getNome(); 
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
