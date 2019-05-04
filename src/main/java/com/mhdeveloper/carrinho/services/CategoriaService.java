@@ -34,8 +34,9 @@ public class CategoriaService {
 		return repository.save(obj);
 	}
 
-	public Categoria atualizar(Categoria obj) {
-		buscar(obj.getId());
+	public Categoria atualizar(Categoria updatedObj) {
+		Categoria obj = buscar(updatedObj.getId());
+		updateData(obj, updatedObj);
 		return repository.save(obj);
 	}
 
@@ -47,6 +48,10 @@ public class CategoriaService {
 		catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos associados");
 		}
+	}
+	
+	private void updateData(Categoria obj, Categoria updatedObj) {
+		obj.setNome(updatedObj.getNome());
 	}
 	
 	public Categoria fromDTO(CategoriaDTO objDTO) {
