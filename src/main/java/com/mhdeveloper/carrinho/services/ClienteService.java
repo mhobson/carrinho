@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mhdeveloper.carrinho.domain.Cidade;
@@ -16,6 +17,7 @@ import com.mhdeveloper.carrinho.dto.ClienteDTO;
 import com.mhdeveloper.carrinho.dto.ClienteNewDTO;
 import com.mhdeveloper.carrinho.repositories.ClienteRepository;
 import com.mhdeveloper.carrinho.repositories.EnderecoRepository;
+import com.mhdeveloper.carrinho.services.exceptions.DataIntegrityException;
 import com.mhdeveloper.carrinho.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -43,6 +45,27 @@ public class ClienteService {
 		obj = repository.save(obj);
 		enderecoRepository.saveAll(obj.getEnderecos());
 		return obj;
+	}
+	
+	public Cliente atualizar(Cliente updatedObj) {
+		Cliente obj = buscar(updatedObj.getId());
+		updateData(obj, updatedObj);
+		return repository.save(obj);
+	}
+
+	public void excluir(Integer id) {
+		buscar(id);
+		try {
+			repository.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir um cliente que possui dados associados");
+		}
+	}
+	
+	private void updateData(Cliente obj, Cliente updatedObj) {
+		obj.setNome(updatedObj.getNome());
+		obj.setEmail(updatedObj.getEmail());
 	}
 	
 	public Cliente fromDTO(ClienteDTO objDTO) {
